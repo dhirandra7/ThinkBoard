@@ -14,13 +14,15 @@ const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
 // middleware
-if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: "*", // Allow all origins in production
+      methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
+      allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+      credentials: true, // Allow credentials (cookies, authorization headers, etc.)
     })
-  );
-}
+);
+
 app.use(express.json()); // this middleware will parse JSON bodies: req.body
 app.use(rateLimiter);
 
